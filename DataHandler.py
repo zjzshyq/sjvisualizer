@@ -41,7 +41,7 @@ class DataHandler():
         # except ValueError as e:
         #     print(f"索引转换失败: {e}")
         #     raise
-
+        print(11111)
         self.df = self.df.loc[:, ~self.df.columns.str.contains('^Unnamed')]
 
     def _prep_data(self):
@@ -52,7 +52,7 @@ class DataHandler():
         #     except ValueError as e:
         #         print(f"索引转换失败: {e}")
         #         raise
-
+        print(222)
         if isinstance(self.df.index[0], numpy.int64) or isinstance(self.df.index[0], float):
             self.df.index = [datetime.datetime(year=int(i), month=12, day=31) for i in self.df.index]
 

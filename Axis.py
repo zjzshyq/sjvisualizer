@@ -262,6 +262,7 @@ def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False, time_i
         rough_tick_incr = rough_range / num_ticks
 
         # Calculate the exponent of the rough tick increment in base 10
+        print(rough_tick_incr)
         exponent = math.floor(math.log10(rough_tick_incr))
 
         # Calculate the nice tick increment

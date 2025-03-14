@@ -310,10 +310,8 @@ class event():
         return (pos1 + pos2) / 2
 
 class line():
-
     def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None,
                  time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None, label_at_end=True):
-
         self.m = 2
         self.k = 0.5
         self.d = 2.4
@@ -377,6 +375,7 @@ class line():
             self.font = font.Font(family=self.xaxis.text_font, size=int(self.xaxis.font_size))
             self.line_label = self.canvas.create_text(-10000, -10000, text=self.name, font=self.font, fill=self.color, anchor="w")
 
+
     def update(self, value, time):
         if time.hour == 0 and time.minute == 0 and time.second == 0 and value:
             self.x_values.append((time - datetime.datetime(1800,1,1)).days)
@@ -403,7 +402,6 @@ class line():
 
         if len(coords) == 2:
             coords = coords + coords
-
         if not self.line:
             if coords:
                 self.line = self.canvas.create_line(*coords, width=self.line_width, fill=self.color)

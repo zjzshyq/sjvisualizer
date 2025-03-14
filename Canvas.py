@@ -229,7 +229,7 @@ class canvas():
             self.tk.destroy()
             cv2.destroyAllWindows()
 
-    def add_title(self, text, color=(0, 0, 0), size_ratio=25):
+    def add_title(self, text, color=(0, 0, 0), size_ratio=25, pos_ratio=(2,8)):
         """
         Helper function to add a title to your animation.
 
@@ -240,9 +240,11 @@ class canvas():
         :type color: tuple of length 3 with integers
 
         """
+        x_pos = self.width/pos_ratio[0]
+        y_pos =  self.height/pos_ratio[1]
         font_size = int(self.height/size_ratio/SCALEFACTOR)
         title_font = font.Font(family=text_font, size=font_size, weight="bold")
-        self.canvas.create_text(self.width/2, self.height/10, font=title_font, text=text, fill=_from_rgb(color))
+        self.canvas.create_text(x_pos, y_pos, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_sub_title(self, text, color=(0, 0, 0), size_ratio=40, pos_ratio=(2, 6.8)):
         """
@@ -262,7 +264,7 @@ class canvas():
         title_font = font.Font(family=text_font, size=font_size)
         self.canvas.create_text(title_width, title_height, font=title_font, text=text, fill=_from_rgb(color))
 
-    def add_time(self, df, time_indicator="year", color=(150, 150, 150), pos_ratio=(0.7, 0.7), size_ratio=8):
+    def add_time(self, df, time_indicator="year", color=(150, 150, 150), pos_ratio=(0.7, 0.7), size_ratio=8, cn=True):
         """
         Helper function to add a timestamp to the visualization
 
@@ -281,7 +283,7 @@ class canvas():
         from sjvisualizer import Date
         sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=time_size,
                                        x_pos=x_pos, y_pos=y_pos, time_indicator=time_indicator,
-                                       font_color=color, anchor="w")
+                                       font_color=color, anchor="w", cn=cn)
         self.add_sub_plot(sub_plot)
 
     def add_logo(self, logo, pos_ratio = (0.9, 0.5), size_ratio=16):
@@ -332,10 +334,11 @@ class sub_plot():
     :param font_color: font color
     :type font_color: tuple of length 3 with integers
     """
-    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]],**kwargs):
+    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]],cn=True,**kwargs):
         """
 
         """
+        self.cn = cn
         if width == None:
             self.width = 0.65 * WIDTH
         else:

@@ -95,10 +95,8 @@ class date(cv.sub_plot):
     :type font_color: tuple of length 3 with integers
     """
     def draw(self, time):
-
         if not hasattr(self, 'prefix'):
             self.prefix = ""
-
         if self.time_indicator == "year":
             text = str(time.year)
         elif self.time_indicator == "month":
@@ -121,15 +119,15 @@ class date(cv.sub_plot):
         self.obj_id = self.canvas.create_text(*position, text=self.prefix + text, font=font.Font(family=text_font, size=int(self.height*0.65/ SCALEFACTOR)), fill=cv._from_rgb(self.font_color), anchor=self.anchor)
 
     def update(self, time):
-        cn = True
+        cn = self.cn
         if not cn:
             if self.time_indicator == "year":
                 text = str(time.year)
             elif self.time_indicator == "month":
-                text = str("{month} {year}".format(month=time.month, year=time.year))
+                text = str("{month} {year}".format(month=months[time.month], year=time.year))
             elif self.time_indicator == "day":
                 if self.format == "USA":
-                    text = str("{month} {day} {year}".format(month=monthstime.month, day=time.day, year=time.year))
+                    text = str("{month} {day} {year}".format(month=months[time.month], day=time.day, year=time.year))
                 else:
                     if len(str(time.day)) == 1:
                         days = "0" + str(time.day)
@@ -142,18 +140,18 @@ class date(cv.sub_plot):
                 text = str(time.year)
             elif self.time_indicator == "month":
                 if len(str(time.month)) == 1:
-                    months = "0" + str(time.month)
+                    monthstr = "0" + str(time.month)
                 else:
-                    months = str(time.month)
-                text = str("{year}/{month}".format(month=months, year=time.year))
+                    monthstr = str(time.month)
+                text = str("{year}-{month}".format(month=monthstr, year=time.year))
             elif self.time_indicator == "day":
                 if len(str(time.day)) == 1:
-                    days = "0" + str(time.day)
-                    months = "0" + str(time.month)
+                    daystr = "0" + str(time.day)
+                    monthstr = "0" + str(time.month)
                 else:
-                    days = str(time.day)
-                    months = str(time.month)
-                text = str("{year}/{month}/{year}".format(days, months, time.year))
+                    daystr = str(time.day)
+                    monthstr = str(time.month)
+                text = str("{year}-{month}-{year}".format(daystr, monthstr, time.year))
 
         self.canvas.itemconfig(self.obj_id, text=self.prefix + text)
         self.canvas.tag_raise(self.obj_id)
